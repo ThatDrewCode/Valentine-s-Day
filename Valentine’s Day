@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Import a romantic Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Will You Be My Valentine? 💖</title>
+  <style>
+    /* ---------------- Base & Layout Styles ---------------- */
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ff99cc 0%, #ff6699 100%);
+      font-family: 'Dancing Script', cursive, sans-serif;
+      margin: 0;
+      padding: 20px;
+      transition: background 0.5s ease;
+      overflow: hidden;
+      position: relative;
+    }
+    h1 {
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      margin-bottom: 40px;
+      font-size: 2.5em;
+      animation: pulse 2s infinite;
+    }
+    .button-container {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    button {
+      font-size: 24px;
+      padding: 20px 40px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    #yesBtn {
+      background: linear-gradient(45deg, #ff3366, #ff6699);
+      color: white;
+      transform: scale(1);
+    }
+    #yesBtn:hover {
+      transform: scale(1.1) rotate(-5deg);
+      box-shadow: 0 8px 25px rgba(255,51,102,0.4);
+    }
+    #noBtn {
+      background: linear-gradient(45deg, #66b3ff, #3399ff);
+      color: white;
+      transition: all 0.2s ease;
+      position: static;
+    }
+    #message {
+      margin-top: 30px;
+      font-size: 32px;
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    /* ---------------- Animated Background Hearts ---------------- */
+    .hearts {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      top: 0;
+      left: 0;
+    }
+    .heart {
+      position: absolute;
+      color: #ff3366;
+      font-size: 24px;
+      animation: float 3s linear infinite;
+      opacity: 0;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+    }
+    /* ---------------- Confetti ---------------- */
+    .confetti {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      top: 0;
+      left: 0;
+    }
+    .confetti-piece {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      animation: confetti 5s linear infinite;
+    }
+    @keyframes confetti {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(100vh) rotate(360deg); }
+    }
+    /* ---------------- Responsive & Mobile Styles ---------------- */
+    @media (max-width: 600px) {
+      h1 { 
+        font-size: 1.8em; 
+      }
+      button { 
+        font-size: 20px; 
+        padding: 15px 30px; 
+      }
+      #message {
+        font-size: 24px;
+      }
+      /* Optional: reduce the number of animated elements if needed */
+    }
+    /* ---------------- Easter Egg Styles ---------------- */
+    #easterEggButton {
+      position: fixed;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1000;
+      border-radius: 50%;
+      background: #fff;
+      color: #ff3366;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    #easterEggContainer {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(255,255,255,0.9);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      z-index: 1000;
+      display: none;
+    }
+    #easterEggContainer input {
+      font-size: 16px;
+      padding: 5px;
+      margin-right: 10px;
+    }
+    #easterEggContainer button {
+      font-size: 16px;
+      padding: 5px 10px;
+    }
+    #countdownTimer {
+      font-size: 20px;
+      margin-top: 10px;
+      color: #ff3366;
+    }
+    /* ---------------- New Features – Additional Styles ---------------- */
+    .cursor-heart {
+      position: fixed;
+      pointer-events: none;
+      width: 24px;
+      height: 24px;
+      transition: transform 0.3s ease-out;
+    }
+    .envelope {
+      position: fixed;
+      top: -100px;
+      animation: floatEnvelope 8s linear infinite;
+      opacity: 0.7;
+      cursor: pointer;
+    }
+    @keyframes floatEnvelope {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(100vh) rotate(360deg); }
+    }
+    .firework {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      animation: explode 1s ease-out forwards;
+    }
+    @keyframes explode {
+      0% { transform: scale(0); opacity: 1; }
+      100% { transform: scale(20); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Main Title & Buttons -->
+  <h1>Will you be my Valentine? 💖</h1>
+  <div class="button-container">
+    <button id="yesBtn" onclick="yesClicked()">Yes</button>
+    <button id="noBtn" onmouseover="dodgeButton()" onclick="noClicked()">No</button>
+  </div>
+  <div id="message"></div>
+  <div class="hearts" id="hearts"></div>
+
+  <!-- Easter Egg Button & Container -->
+  <button id="easterEggButton" onclick="toggleEasterEgg()">💌</button>
+  <div id="easterEggContainer">
+    <p>When did we get together? Enter the code:</p>
+    <input type="text" id="easterEggInput" placeholder="MM/DD/YY" />
+    <button onclick="checkEasterEggCode()">Submit</button>
+    <p id="easterEggError" style="color:red; display:none;">Incorrect code. Try again!</p>
+    <div id="countdownTimer" style="display:none;"></div>
+  </div>
+
+  <!-- Background Music (Valentine Theme) -->
+  <audio id="bgMusic" loop>
+    <!-- Replace the src below with a valid Valentine-themed track URL -->
+    <source src="https://cdn.pixabay.com/download/audio/2022/09/10/audio_62d9c5b4e4.mp3?filename=valentine-melody.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    /* -------------- Global Variables -------------- */
+    let noCount = 0;
+    let scale = 1;
+    const messages = [
+      "Please? 🥺",
+      "Think again! 💭",
+      "I'll be sad 😢",
+      "My heart is breaking 💔",
+      "Pretty please? 🥺",
+      "Last chance! 😭"
+    ];
+
+    /* -------------- Functions from the First Code Block -------------- */
+    function createHearts() {
+      const heartsContainer = document.getElementById('hearts');
+      // Create 50 decorative hearts with random positions and delays
+      for (let i = 0; i < 50; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.innerHTML = '💖';
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.animationDelay = Math.random() * 2 + 's';
+        heartsContainer.appendChild(heart);
+      }
+    }
+
+    function createConfetti() {
+      const confettiContainer = document.createElement('div');
+      confettiContainer.className = 'confetti';
+      for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti-piece';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.animationDelay = Math.random() * 2 + 's';
+        confetti.style.backgroundColor = `#${Math.random().toString(16).substr(2, 6)}`;
+        confettiContainer.appendChild(confetti);
+      }
+      document.body.appendChild(confettiContainer);
+    }
+
+    function noClicked() {
+      noCount++;
+      const messageDiv = document.getElementById("message");
+      const yesBtn = document.getElementById("yesBtn");
+
+      messageDiv.innerHTML = messages[noCount % messages.length] || "Okay, I'll wait... ⏳";
+      messageDiv.style.animation = 'shake 0.5s';
+
+      scale += 0.1;
+      yesBtn.style.transform = `scale(${scale}) rotate(${Math.random() * 10 - 5}deg)`;
+      yesBtn.style.background = `linear-gradient(45deg, #ff${Math.random().toString(16).substr(2, 6)}, #ff${Math.random().toString(16).substr(2, 6)})`;
+
+      if (noCount > 3) {
+        document.body.style.background = `linear-gradient(135deg, #${Math.random().toString(16).substr(2, 6)} 0%, #${Math.random().toString(16).substr(2, 6)} 100%)`;
+      }
+    }
+
+    function dodgeButton() {
+      const btn = document.getElementById('noBtn');
+      if (noCount > 2) {
+        btn.style.position = 'absolute';
+        btn.style.transition = 'all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
+        btn.style.transform = `translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) scale(${1 - noCount / 20})`;
+      } else if (noCount > 0) {
+        btn.style.transform = `translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px)`;
+        btn.style.transition = 'all 0.3s ease';
+      }
+    }
+
+    /* -------------- Combined Yes Button Function -------------- */
+    function yesClicked() {
+      // Create a firework explosion at the center
+      createFirework(window.innerWidth / 2, window.innerHeight / 2);
+      
+      // Start an interval to add decorative hearts and random fireworks
+      setInterval(() => {
+        createHearts();
+        createFirework(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
+      }, 500);
+      
+      // Trigger a confetti explosion
+      createConfetti();
+      
+      // Create an overlay with a congratulatory message
+      const overlay = document.createElement('div');
+      overlay.style.position = 'fixed';
+      overlay.style.top = '0';
+      overlay.style.left = '0';
+      overlay.style.width = '100%';
+      overlay.style.height = '100%';
+      overlay.style.background = 'rgba(0, 0, 0, 0.8)';
+      overlay.style.display = 'flex';
+      overlay.style.flexDirection = 'column';
+      overlay.style.justifyContent = 'center';
+      overlay.style.alignItems = 'center';
+      overlay.style.zIndex = '2000';
+      overlay.innerHTML = `
+        <h1 style="font-size: 3em; color: white;">YIPPEE! I LOVE YOU! 💖</h1>
+        <p style="color: white; font-size: 1.5em;">You've made me the happiest person! 😍</p>
+        <button onclick="location.reload()" style="margin-top: 20px; padding: 10px 20px; font-size: 1.2em;">Play Again</button>
+      `;
+      document.body.appendChild(overlay);
+      
+      // Change the background color
+      document.body.style.background = '#ff3366';
+    }
+
+    /* -------------- Easter Egg Functions -------------- */
+    function toggleEasterEgg() {
+      const container = document.getElementById('easterEggContainer');
+      container.style.display = (container.style.display === 'none' || container.style.display === '') ? 'block' : 'none';
+    }
+
+    function checkEasterEggCode() {
+      const input = document.getElementById('easterEggInput').value.trim();
+      const errorP = document.getElementById('easterEggError');
+      if (input === "05/12/24") {
+        errorP.style.display = 'none';
+        startCountdown();
+      } else {
+        errorP.style.display = 'block';
+      }
+    }
+
+    function startCountdown() {
+      const countdownDiv = document.getElementById('countdownTimer');
+      countdownDiv.style.display = 'block';
+      const targetDate = new Date("May 12, 2025 00:00:00");
+      function updateCountdown() {
+        const now = new Date();
+        const diff = targetDate - now;
+        if (diff <= 0) {
+          countdownDiv.innerHTML = "It's here!";
+          clearInterval(interval);
+          return;
+        }
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+        countdownDiv.innerHTML = `Countdown to our day: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+      }
+      updateCountdown();
+      const interval = setInterval(updateCountdown, 1000);
+    }
+
+    /* -------------- Additional Features from the Second Code Block -------------- */
+    // 1. Heart Cursor Trail
+    document.addEventListener('mousemove', (e) => {
+      const heart = document.createElement('div');
+      heart.className = 'cursor-heart';
+      heart.innerHTML = '💖';
+      heart.style.left = `${e.pageX - 12}px`;
+      heart.style.top = `${e.pageY - 12}px`;
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 1000);
+    });
+
+    // 2. Floating Envelopes
+    function createEnvelope() {
+      const envelope = document.createElement('div');
+      envelope.className = 'envelope';
+      envelope.innerHTML = '✉️';
+      envelope.style.left = Math.random() * 90 + '%';
+      envelope.style.animationDuration = Math.random() * 3 + 5 + 's';
+      envelope.onclick = () => {
+        envelope.innerHTML = '💌';
+        setTimeout(() => envelope.remove(), 1000);
+      };
+      document.body.appendChild(envelope);
+      setTimeout(() => envelope.remove(), 8000);
+    }
+    setInterval(createEnvelope, 3000);
+
+    // 3. Fireworks
+    function createFirework(x, y) {
+      for (let i = 0; i < 50; i++) {
+        const firework = document.createElement('div');
+        firework.className = 'firework';
+        firework.style.left = x + 'px';
+        firework.style.top = y + 'px';
+        firework.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        document.body.appendChild(firework);
+        setTimeout(() => firework.remove(), 1000);
+      }
+    }
+
+    // 4. Background Music – Plays once when the user first clicks anywhere on the page
+    const bgMusic = document.getElementById('bgMusic');
+    document.body.addEventListener('click', () => {
+      bgMusic.play();
+    }, { once: true });
+
+    /* -------------- Initial Call -------------- */
+    // Start the background hearts animation
+    createHearts();
+  </script>
+</body>
+</html>
